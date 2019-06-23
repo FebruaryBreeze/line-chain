@@ -1,0 +1,2 @@
+jsonschema
+json-schema-to-class>=0.1.7

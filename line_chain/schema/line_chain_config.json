@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "line_chain_config",
+  "description": "Line Chain Config, a list of lines",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/line"
+  },
+  "default": [],
+  "definitions": {
+    "line": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "linear",
+            "cosine",
+            "fixed"
+          ],
+          "default": "fixed"
+        },
+        "start": {
+          "type": "number",
+          "default": null,
+          "description": "initial value of the line. Equivalent to the previous target value if null"
+        },
+        "target": {
+          "type": "number",
+          "default": 0.0,
+          "description": "target value of the line"
+        },
+        "ratio": {
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "the stop point ratio, like 0.3 means 30% of the whole progress"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "ratio"
+      ]
+    }
+  }
+}

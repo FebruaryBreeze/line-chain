@@ -1,0 +1,21 @@
+language: python
+cache: pip
+python:
+  - '3.6'
+install:
+  - pip install -r requirements.txt
+  - pip install flake8 pytest pytest-cov codecov -U
+script:
+  - python -m flake8
+  - python -m pytest --cov=line_chain
+after_success:
+  - codecov --token=dabc4b96-e5db-4f62-97e3-b5b266599c4d
+deploy:
+  provider: pypi
+  user: sfzhou
+  on:
+    branch: master
+  skip_cleanup: true
+  skip_existing: true
+  password:
+    secure: O70apUjBrJ4yzXCTuC7264GpAWkfwiLKOxIMh1il/4/uk1p9muTPlo1Mga5oI3TMpVTihHS/WiryVE7SgO1JB7l/hQzG7XqBSvqC096oYzN6LmpxWMcUnlL00diQF0sA7Mmv/3IDXmwlUy0tJjjRE2xo1xaJ4kKTrUpcZjXOxn5ETRmJ35UUzl6l27jaLzf0SGk2s97hC37hnJTTTfnlfysZqUVhfgl3PTjPCvJShhTKDIXQGDF3lpcnRQZb4T2dMtWy4wWv7TmZydVbeTqnT8Aa8vYiCICB8FBBxKogBXwVkDJBjLoUpMs/52Fhg5kSutKZ06Qd48dfP39E3WCCoLU9ckuym1iJ6Tlr7Qz2BctiqPxSaXPDeg2EY1ei1gm/EY/NTWxxLxAjXrgJ25+oRZAX+JLbCdKThzNWC8ZH5/15TZ+Gp4YaSUn3rlNjH+DK8v3avJbIl9aGvcqeb4AFpyCJ2IPeK+jC0KzQveeBrZSNsMRdh79yVikuThEEpSNFOxrYPmqNXJ+GMC0MPU3VafRyGXoqv7poJ9F95kMp+ABiazqJgWj3XG7pV7jDfKlBwH5RmbwluScgNFxi5aaTcloFP2cEbJsgSvT2weGXwzilU3y8KbPMULgmB8BKEcZM2z1jGjxr6EEFmRrcLoUryKC6/mZ/D9KePdCv31nk/GI=
