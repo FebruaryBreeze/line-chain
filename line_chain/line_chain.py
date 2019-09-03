@@ -14,7 +14,7 @@ class LineChain:
         schema = json.load(f)
 
     def __init__(self, config: LineChainConfig):
-        self.lines = sorted(config.items, key=lambda x: x.ratio)
+        self.lines = sorted(config, key=lambda x: x.ratio)
         self.ratios = [scheduler.ratio for scheduler in self.lines]
         if self.ratios[-1] != 1.0:
             self.lines.append(Line({
