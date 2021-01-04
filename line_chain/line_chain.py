@@ -33,16 +33,20 @@ class LineChain:
             previous = line
 
     @staticmethod
-    def mode_fixed(_: float):
-        return 1.0
+    def mode_fixed(_: float, __: float, target: float):
+        return target
 
     @staticmethod
-    def mode_linear(r: float):
-        return r
+    def mode_linear(r: float, start: float, target: float):
+        return start + (target - start) * r
 
     @staticmethod
-    def mode_cosine(r: float):
-        return (1.0 - math.cos(r * math.pi)) / 2
+    def mode_cosine(r: float, start: float, target: float):
+        return start + (target - start) * (1.0 - math.cos(r * math.pi)) / 2
+
+    @staticmethod
+    def mode_exp(r: float, start: float, target: float):
+        return start * pow(target / start, r)
 
     def at(self, ratio: float) -> float:
         assert 0.0 <= ratio <= 1.0
@@ -51,9 +55,7 @@ class LineChain:
 
         previous_ratio = 0.0 if index == 0 else self.lines[index - 1].ratio
         r = (ratio - previous_ratio) / (current.ratio - previous_ratio)
-        r = eval(f'self.mode_{current.mode}')(r)
-
-        return current.start + (current.target - current.start) * r
+        return eval(f'self.mode_{current.mode}')(r, current.start, current.target)
 
     def __getitem__(self, ratio: float):
         return self.at(ratio)

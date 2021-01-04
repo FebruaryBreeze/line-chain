@@ -15,7 +15,8 @@
           "enum": [
             "linear",
             "cosine",
-            "fixed"
+            "fixed",
+            "exp"
           ],
           "default": "fixed"
         },
