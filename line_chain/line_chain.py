@@ -67,7 +67,7 @@ class LineChain:
                 f' {item.ratio * 100: 6.1f}%, {item.mode} from {item.start} to {item.target},'
                 for item in self.lines
             ],
-            f')'
+            ')'
         ])
 
     @classmethod
