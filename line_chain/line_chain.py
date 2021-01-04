@@ -44,11 +44,6 @@ class LineChain:
     def mode_cosine(r: float):
         return (1.0 - math.cos(r * math.pi)) / 2
 
-    @staticmethod
-    def mode_exp(r: float, base_lr: float = 0.01, target_lr: float = 0.1):
-        lr_scale = target_lr / base_lr
-        return (base_lr * (math.pow(lr_scale, r) - 1) / (target_lr - base_lr))
-
     def at(self, ratio: float) -> float:
         assert 0.0 <= ratio <= 1.0
         index = bisect.bisect_left(self.ratios, ratio)
@@ -56,10 +51,7 @@ class LineChain:
 
         previous_ratio = 0.0 if index == 0 else self.lines[index - 1].ratio
         r = (ratio - previous_ratio) / (current.ratio - previous_ratio)
-        if current.mode == "exp":
-            r = eval(f'self.mode_{current.mode}')(r, current.start, current.target)
-        else:
-            r = eval(f'self.mode_{current.mode}')(r)
+        r = eval(f'self.mode_{current.mode}')(r)
 
         return current.start + (current.target - current.start) * r
 
@@ -73,7 +65,7 @@ class LineChain:
                 f' {item.ratio * 100: 6.1f}%, {item.mode} from {item.start} to {item.target},'
                 for item in self.lines
             ],
-            f')'
+            ')'
         ])
 
     @classmethod
